@@ -1,9 +1,7 @@
 package job_tracker;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,7 @@ public class JobApplicationController {
     }
 
     @PostMapping("/api/applications")
+    @ResponseStatus(HttpStatus.CREATED)
     public void postApplication(@RequestBody JobApplication application){
         jobApplicationService.addApplication(application);
     }
