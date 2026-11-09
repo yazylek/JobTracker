@@ -24,4 +24,9 @@ public class JobApplicationController {
     public void postApplication(@RequestBody JobApplication application){
         jobApplicationService.addApplication(application);
     }
+
+    @GetMapping("/api/applications/{id}")
+    public JobApplication getApplicationById(@PathVariable Long id){
+        return jobApplicationService.getApplicationById(id);
+    }
 }

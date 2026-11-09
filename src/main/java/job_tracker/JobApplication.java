@@ -1,20 +1,40 @@
 package job_tracker;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class JobApplication{
+@Entity
+@Table(name = "job_applications")
+public class JobApplication {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "company_name", nullable = false)
     private String companyName;
+
+    @Column(name = "position", nullable = false)
     private String position;
+
+    @Column(name = "salary_range_min")
     private BigDecimal salaryRangeMin;
+
+    @Column(name = "salary_range_max")
     private BigDecimal salaryRangeMax;
+
+    @Column(name = "application_date", nullable = false)
     private LocalDate applicationDate;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private ApplicationStatus status;
 
     public JobApplication(String companyName, String position, BigDecimal salaryRangeMin, BigDecimal salaryRangeMax, LocalDate applicationDate, ApplicationStatus status) {
         if (salaryRangeMin != null && salaryRangeMax != null) {
-            if(salaryRangeMin.compareTo(salaryRangeMax) > 0) {
+            if (salaryRangeMin.compareTo(salaryRangeMax) > 0) {
                 throw new IllegalArgumentException("Salary range cannot be greater than salary range max");
             }
         }
@@ -22,7 +42,7 @@ public class JobApplication{
             throw new IllegalArgumentException("Salary range cannot be less than zero");
         }
         if (salaryRangeMax != null && salaryRangeMax.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Salary range cannot be greater than salary range");
+            throw new IllegalArgumentException("Maximum salary cannot be negative");
         }
         this.companyName = companyName;
         this.position = position;
@@ -30,6 +50,9 @@ public class JobApplication{
         this.salaryRangeMax = salaryRangeMax;
         this.applicationDate = applicationDate;
         this.status = status;
+    }
+
+    protected JobApplication() {
     }
 
     public Long getId() {
