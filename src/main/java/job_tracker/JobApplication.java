@@ -83,6 +83,30 @@ public class JobApplication {
         return status;
     }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setSalaryRangeMin(BigDecimal salaryRangeMin) {
+        this.salaryRangeMin = salaryRangeMin;
+    }
+
+    public void setSalaryRangeMax(BigDecimal salaryRangeMax) {
+        this.salaryRangeMax = salaryRangeMax;
+    }
+
+    public void setApplicationDate(LocalDate applicationDate) {
+        this.applicationDate = applicationDate;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "JobApplication{" +
