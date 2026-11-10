@@ -34,4 +34,10 @@ public class JobApplicationController {
     public JobApplication putApplication(@PathVariable Long id, @RequestBody JobApplication application){
         return jobApplicationService.updateApplication(id, application);
     }
+
+    @DeleteMapping("api/applications/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteApplication(@PathVariable Long id){
+        jobApplicationService.removeApplication(id);
+    }
 }

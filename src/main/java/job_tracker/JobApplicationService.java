@@ -54,4 +54,8 @@ public class JobApplicationService {
         return jobApplicationRepository.save(existingApplication);
     }
 
+    public void removeApplication(Long id){
+        jobApplicationRepository.deleteById(id);
+    }
+
 }
