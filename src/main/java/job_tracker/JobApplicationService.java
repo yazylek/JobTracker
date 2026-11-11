@@ -2,6 +2,9 @@ package job_tracker;
 
 import job_tracker.dto.CreateJobApplicationRequest;
 import job_tracker.dto.UpdateJobApplicationRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,8 +19,13 @@ public class JobApplicationService {
         this.jobApplicationRepository = jobApplicationRepository;
     }
 
-    public List<JobApplication> getAllApplications() {
-        return jobApplicationRepository.findAll();
+    public Page<JobApplication> getAllApplications(ApplicationStatus status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        if(status == null){
+            return jobApplicationRepository.findAll(pageable);
+        } else {
+            return jobApplicationRepository.findByStatus(status, pageable);
+        }
     }
 
     public void addApplication(CreateJobApplicationRequest request){

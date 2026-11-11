@@ -3,6 +3,7 @@ package job_tracker;
 import jakarta.validation.Valid;
 import job_tracker.dto.CreateJobApplicationRequest;
 import job_tracker.dto.UpdateJobApplicationRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class JobApplicationController {
     }
 
     @GetMapping("/api/applications")
-    public List<JobApplication> getApplications(){
-        return jobApplicationService.getAllApplications();
+    public Page<JobApplication> getApplications(@RequestParam(required = false) ApplicationStatus status, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        return jobApplicationService.getAllApplications(status, page, size);
     }
 
     @PostMapping("/api/applications")
