@@ -33,17 +33,7 @@ public class JobApplication {
     private ApplicationStatus status;
 
     public JobApplication(String companyName, String position, BigDecimal salaryRangeMin, BigDecimal salaryRangeMax, LocalDate applicationDate, ApplicationStatus status) {
-        if (salaryRangeMin != null && salaryRangeMax != null) {
-            if (salaryRangeMin.compareTo(salaryRangeMax) > 0) {
-                throw new IllegalArgumentException("Salary range cannot be greater than salary range max");
-            }
-        }
-        if (salaryRangeMin != null && salaryRangeMin.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Salary range cannot be less than zero");
-        }
-        if (salaryRangeMax != null && salaryRangeMax.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Maximum salary cannot be negative");
-        }
+        validateSalaryRange(salaryRangeMin, salaryRangeMax);
         this.companyName = companyName;
         this.position = position;
         this.salaryRangeMin = salaryRangeMin;
@@ -83,27 +73,37 @@ public class JobApplication {
         return status;
     }
 
-    public void setCompanyName(String companyName) {
+    private static void validateSalaryRange(
+            BigDecimal salaryRangeMin,
+            BigDecimal salaryRangeMax
+    ){
+        if (salaryRangeMin != null && salaryRangeMax != null) {
+            if (salaryRangeMin.compareTo(salaryRangeMax) > 0) {
+                throw new IllegalArgumentException("Salary range cannot be greater than salary range max");
+            }
+        }
+        if (salaryRangeMin != null && salaryRangeMin.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Salary range cannot be less than zero");
+        }
+        if (salaryRangeMax != null && salaryRangeMax.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Maximum salary cannot be negative");
+        }
+    }
+
+    public void updateDetails(
+            String companyName,
+            String position,
+            BigDecimal salaryRangeMin,
+            BigDecimal salaryRangeMax,
+            LocalDate applicationDate,
+            ApplicationStatus status
+    ){
+        validateSalaryRange(salaryRangeMin, salaryRangeMax);
         this.companyName = companyName;
-    }
-
-    public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setSalaryRangeMin(BigDecimal salaryRangeMin) {
         this.salaryRangeMin = salaryRangeMin;
-    }
-
-    public void setSalaryRangeMax(BigDecimal salaryRangeMax) {
         this.salaryRangeMax = salaryRangeMax;
-    }
-
-    public void setApplicationDate(LocalDate applicationDate) {
         this.applicationDate = applicationDate;
-    }
-
-    public void setStatus(ApplicationStatus status) {
         this.status = status;
     }
 

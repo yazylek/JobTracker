@@ -1,5 +1,8 @@
 package job_tracker;
 
+import jakarta.validation.Valid;
+import job_tracker.dto.CreateJobApplicationRequest;
+import job_tracker.dto.UpdateJobApplicationRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +24,7 @@ public class JobApplicationController {
 
     @PostMapping("/api/applications")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postApplication(@RequestBody JobApplication application){
+    public void postApplication(@Valid @RequestBody CreateJobApplicationRequest application){
         jobApplicationService.addApplication(application);
     }
 
@@ -31,7 +34,7 @@ public class JobApplicationController {
     }
 
     @PutMapping("api/applications/{id}")
-    public JobApplication putApplication(@PathVariable Long id, @RequestBody JobApplication application){
+    public JobApplication putApplication(@PathVariable Long id, @RequestBody @Valid UpdateJobApplicationRequest application){
         return jobApplicationService.updateApplication(id, application);
     }
 
